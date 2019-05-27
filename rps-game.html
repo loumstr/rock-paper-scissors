@@ -32,11 +32,13 @@ function playRound(playerSelection, computerSelection) {
     playerSelection = capitalize(playerSelection);
     console.log("Your selection is " + playerSelection + ".")
     if (computerSelection == playerSelection) {
-    return "It's a tie! Try again.";
+        return "It's a tie! Try again.";
   } else if ((computerSelection == "Rock" && playerSelection == "Scissors") || (computerSelection == "Paper" && playerSelection == "Rock") || (computerSelection == "Scissors" && playerSelection == "Paper")) {
-    return "You lose! " + computerSelection + " beats " + playerSelection + ".";
+        return "You lose! " + computerSelection + " beats " + playerSelection + ".";
+  } else if ((computerSelection == "Rock" && playerSelection == "Paper") || (computerSelection == "Paper" && playerSelection == "Scissors") || (computerSelection == "Scissors" && playerSelection == "Rock")) {
+        return "You win! " + playerSelection + " beats " + computerSelection + ".";
   } else {
-    return "You win! " + playerSelection + " beats " + computerSelection + ".";
+        return "How do you even make a hand sign for THAT? ;) Please pick one of the game's options: Rock, Paper, or Scissors."
   }
 }
 
