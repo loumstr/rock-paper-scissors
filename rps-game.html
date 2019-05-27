@@ -13,7 +13,14 @@ function getRandomNumber(min, max) {
   return Math.floor(Math.random()*(max-min + 1) + min);
 }
 
-console.log(getRandomNumber(0,2));
+function computerPlay() {
+  let n = getRandomNumber(0,2);
+  console.log(n);
+  let options = ["Rock", "Paper", "Scissors"];
+  return options[n];
+}
+
+console.log(computerPlay());
 
   </script>
 </body>
