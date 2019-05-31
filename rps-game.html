@@ -7,28 +7,36 @@
   
   <script>
 
+// Pick random integer 0, 1, or 2
 function getRandomNumber(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random()*(max-min + 1) + min);
 }
 
+// Associate random number to a game option
 function computerPlay() {
   let n = getRandomNumber(0,2);
   let options = ["Rock", "Paper", "Scissors"];
   return options[n];
 }
 
-let playerSelection = "rock";
+// Get the player's and computer's selection
+let playerSelection = prompt("Let's play a game! Pick one: Rock, Paper, or Scissors", undefined);
 let computerSelection = computerPlay();
 
 console.log("The computer's selection is " + computerSelection + ".");
 
+// Capitalize the player's selection 
 function capitalize(string) {
     return (string.charAt(0)).toUpperCase() + (string.slice(1)).toLowerCase();
 }
 
+// Return the results of a single round
 function playRound(playerSelection, computerSelection) {
+    if ((playerSelection == undefined) || (playerSelection = " ")) {
+        return "Please pick one of the game's options: Rock, Paper, or Scissors. Which one will it be? :)";
+  }
     playerSelection = capitalize(playerSelection);
     console.log("Your selection is " + playerSelection + ".")
     if (computerSelection == playerSelection) {
