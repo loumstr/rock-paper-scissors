@@ -1,104 +1,113 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+  <title>Rock, Paper, Scissors</title>
 </head>
 <body>
-  
   <script>
 
-// Pick random integer 0, 1, or 2
-function getRandomNumber(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random()*(max-min + 1) + min);
-}
-
-// Associate random number to a game option
+// Define the computer's selection
 function computerPlay() {
-  let n = getRandomNumber(0,2);
-    if (n == 0) {
-    return "Rock";
-  } else if (n == 1) {
-  return "Paper";
-  } else if (n == 2) {
-  return "Scissors";
+  let n = Math.floor(Math.random()*3); // pick a random integer between 0 and 2
+  switch (n) {
+    case 0: return "Rock";
+    case 1: return "Paper";
+    case 2: return "Scissors";
   }
 }
 
 // Capitalize the player's selection 
 function capitalize(string) {
-    return (string.charAt(0)).toUpperCase() + (string.slice(1)).toLowerCase();
+   return (string.charAt(0)).toUpperCase() + (string.slice(1)).toLowerCase();
 }
 
-
-
-// Function to return the result of a game, after 5 rounds
-function game() {
-  // Round 1
-  playRound();
-  console.log(playerScore + " , " + computerScore)
-  let playerTotal = playerScore;
-  let computerTotal = computerScore;
-  // Round 2
-  playRound();
-  console.log(playerScore + " , " + computerScore)
-  playerTotal += playerScore;
-  computerTotal += computerScore;
-  playRound();
-  // Round 3
-  console.log(playerScore + " , " + computerScore)
-  playerTotal += playerScore;
-  computerTotal += computerScore;
-  // Round 4
-  playRound();
-  console.log(playerScore + " , " + computerScore)
-  playerTotal += playerScore;
-  computerTotal += computerScore;
-  // Round 5
-  playRound();
-  console.log(playerScore + " , " + computerScore)
-  playerTotal += playerScore;
-  computerTotal += computerScore;
- return "The final score is " + playerTotal + " , " + computerTotal;
-
-// Function to play a single round
- function playRound(playerSelection, computerSelection) {
-
-    // Define the player's selection (capitalized)
-    playerSelection = prompt("Let's play a game! Pick one: Rock, Paper, or Scissors.", " ");
-    if (playerSelection == " ") {
-        playerSelection = prompt("Please pick one of the game's options: Rock, Paper, or Scissors. Which one will it be? :)");
-    }
-    playerSelection = capitalize(playerSelection);
-
-    // Define the computer's selection
-    computerSelection = computerPlay();
-    console.log("The computer's selection is " + computerSelection + ".");
-    
-     if (computerSelection == playerSelection) {
-        playerScore = 0;
-        computerScore = 0;
-        console.log("It's a tie!");  
-    } else if ((computerSelection == "Rock" && playerSelection == "Scissors") || (computerSelection == "Paper" && playerSelection == "Rock") || (computerSelection == "Scissors" && playerSelection == "Paper")) {
-        playerScore = 0;
-        computerScore = 1;
-        console.log("You lose! " + computerSelection + " beats " + playerSelection + ".");  
-    } else if ((computerSelection == "Rock" && playerSelection == "Paper") || (computerSelection == "Paper" && playerSelection == "Scissors") || (computerSelection == "Scissors" && playerSelection == "Rock")) {
-        playerScore = 1;
-        computerScore = 0;
-        console.log("You win! " + playerSelection + " beats " + computerSelection + ".");
-    } else {
-        playerScore = 0;
-        computerScore = 1;
-        console.log("How do you even make a hand sign for THAT? Anyhow, you lose!");
-    }
+// Make sure the player choses one of the 3 options
+function select (playerSelection) {
+  if (playerSelection == "Rock" || playerSelection == "Paper" || playerSelection == "Scissors") {
+  return playerSelection; 
+  } else {
+  return playerSelection = "Invalid";
   }
 }
 
+// Function to play a single round
+function playRound(playerSelection, computerSelection) {
 
-console.log(game());
+  if (playerSelection == "Invalid") return "invalid"; // Checks it's one of the 3 options
 
+  if (computerSelection == playerSelection) return "draw"; // Checks if it's a draw
+
+  switch (playerSelection) { // Otherwise, checks for a win or lose
+    case "Rock":
+      if (computerSelection == "Scissors" ) {
+        return "win";
+      } else return "lose";
+      break;
+
+    case "Paper":
+      if (computerSelection == "Rock") {
+        return "win";
+      } else return "lose";
+      break;
+
+    case "Scissors":
+      if (computerSelection == "Paper") {
+        return "win";
+      } else return "lose";
+      break;
+  }
+}
+
+// Function to return the result of a game, after 5 rounds
+function game() {
+
+  // Set up the game's rules
+  const numberOfRounds = 5;
+  let playerScore = 0;
+  let computerScore = 0;
+  let currentRound = 1;
+  
+  // Play multiple rounds and update score
+  while (currentRound <= numberOfRounds) { 
+
+    // Define the player's selection (capitalized)
+    playerSelection = capitalize(prompt("Let's play a game: Rock! Paper! Scissors! Enter your choice: "));
+    playerSelection = select(playerSelection);
+
+    // Define the computer's selection
+    computerSelection = computerPlay();
+  
+    switch(playRound(playerSelection, computerSelection)) {
+        case "win":
+        playerScore++;
+        currentRound++;
+        console.log("You win! " + playerSelection + " beats " + computerSelection + ". Player: " + playerScore + " , Computer: " + computerScore + ".");
+        break;
+
+        case "lose":
+        computerScore++;
+        currentRound++;
+        console.log("You lose! " + computerSelection + " beats " + playerSelection + ". Player: " + playerScore + " , Computer: " + computerScore + ".");
+        break;
+
+        case "draw":
+        currentRound++;
+        console.log("It's a tie! Player: " + playerScore + " , Computer: " + computerScore + ".");
+        break;
+
+        default: // do nothing
+      }
+  }
+    if (playerScore > computerScore) {
+      console.log("You won the game!")
+      } else { 
+        console.log("You lost the game :'(")
+      }
+}
+
+
+game(); // Play the game
+  
   </script>
 </body>
 </html>
